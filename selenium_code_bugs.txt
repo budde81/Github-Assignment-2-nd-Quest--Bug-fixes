@@ -1,0 +1,32 @@
+Bugs in the pasted Selenium code
+
+1. Incorrect search-field locator
+   The code looks for an element with name "q1". Google's search field
+   typically uses the name "q", so Selenium may raise NoSuchElementException.
+
+2. Typo in the page title property
+   The code uses driver.titel. The correct WebDriver property is driver.title.
+   As written, this raises AttributeError.
+
+3. Fixed sleep does not reliably wait for search results
+   time.sleep(2) always waits two seconds, regardless of whether the page is
+   ready. The delay may be too short on a slow connection or unnecessarily
+   long on a fast one. Use an explicit wait for a specific page condition.
+
+4. Browser cleanup may be skipped after an error
+   If an earlier command raises an exception, execution will not reach
+   driver.close(). Use a try/finally block to ensure cleanup.
+
+5. driver.close() may leave the WebDriver session running
+   close() closes the current window. driver.quit() is generally appropriate
+   at the end of a script because it closes all browser windows and ends the
+   WebDriver session.
+
+6. Possible non-breaking spaces in the pasted code
+   Some blank lines appear to contain unusual whitespace. If those characters
+   are literal non-breaking spaces in the Python file, they may cause a
+   syntax error. Replace them with ordinary spaces or blank lines.
+
+Likely execution order:
+- The incorrect locator may fail first with NoSuchElementException.
+- If the search proceeds, driver.titel will fail with AttributeError.

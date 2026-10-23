@@ -1,0 +1,31 @@
+Code Quality Improvements in confest.py
+
+1. Correct element locator
+   The Google search field is located by its current name, "q", avoiding the
+   failed lookup caused by the incorrect "q1" locator.
+
+2. Explicit waits instead of fixed delays
+   WebDriverWait waits for the search input, navigation, and results container
+   to become available. This avoids arbitrary sleeps and uses a 15-second
+   timeout for browser conditions.
+
+3. Reliable WebDriver cleanup
+   A try/finally block calls driver.quit() whether the search succeeds or an
+   error occurs, closing the browser and ending the WebDriver session.
+
+4. Clear handling of Google verification
+   The script checks whether Google navigates to its verification page and
+   raises a clear RuntimeError instead of presenting that page as search
+   results. This does not attempt to bypass Google's restrictions.
+
+5. Structured program entry point
+   Search logic is kept in main(), and the __name__ guard ensures it runs when
+   the file is executed directly rather than when imported as a module.
+
+6. Single source for the search query
+   The search text is stored in search_query and reused when submitting the
+   search, making it easier to update and reducing duplicated values.
+
+7. Readable imports and type annotation
+   Imports are grouped by standard library and third-party packages, and
+   main() has a return type annotation for clearer intent.
